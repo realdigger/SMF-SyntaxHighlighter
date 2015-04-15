@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
-<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info">
 
     <id>digger:code_syntax_highlighter</id>
     <name>Code Syntax Highlighter</name>
@@ -12,7 +12,7 @@
         <readme type="file" parsebbc="true" lang="russian">readme/russian.txt</readme>
         <readme type="file" parsebbc="true" lang="english-utf8">readme/english-utf8.txt</readme>
         <readme type="file" parsebbc="true" lang="russian-utf8">readme/russian-utf8.txt</readme>
-        <require-dir name="Sources" destination="$boarddir"/>
+        <require-file name="Mod-CodeSyntaxHighlighter.php" destination="$sourcedir"/>
         <require-dir name="Themes" destination="$boarddir"/>
         <code>add_settings.php</code>
         <code>hooks.php</code>
@@ -24,7 +24,6 @@
         <remove-dir name="$languagedir/CodeSyntaxHighlighter"/>
         <remove-dir name="$themedir/scripts/CodeSyntaxHighlighter"/>
         <remove-dir name="$themedir/css/CodeSyntaxHighlighter"/>
-        <code>add_settings.php</code>
         <code>hooks.php</code>
     </uninstall>
 
