@@ -195,7 +195,7 @@ function changeCodeSyntaxHighlighterTag(&$codes = array())
                 'content' => '<div class="codeheader">' . $txt['code'] . ': (text) </div><pre name="code" class="brush: php">$1</pre>',
                 'validate' => create_function('&$tag, &$data, $disabled', '
                     if (!isset($disabled[\'code\']))
-					    $data = rtrim($data[0], "\n\r");
+					    $data = rtrim($data, "\n\r");
             	'),
                 'block_level' => true,
                 'disabled_content' => '<pre>$1</pre>',
@@ -209,7 +209,7 @@ function changeCodeSyntaxHighlighterTag(&$codes = array())
                 'content' => '<div class="codeheader">' . $txt['code'] . ': (php) </div><pre name="code" class="brush: php">$1</pre>',
                 'validate' => create_function('&$tag, &$data, $disabled', '
                     if (!isset($disabled[\'php\']))
-					    $data = rtrim($data[0], "\n\r");
+					    $data = rtrim($data, "\n\r");
             	'),
                 'block_level' => true,
                 'disabled_content' => '<pre>$1</pre>',
