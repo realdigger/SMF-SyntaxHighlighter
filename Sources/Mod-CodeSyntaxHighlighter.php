@@ -21,7 +21,6 @@ function loadCodeSyntaxHighlighterHooks()
 {
     add_integration_function('integrate_load_theme', 'loadCodeSyntaxHighlighterAssets', false);
     add_integration_function('integrate_menu_buttons', 'addCodeSyntaxHighlighterCopyright', false);
-    add_integration_function('integrate_general_mod_settings', 'changeCodeSyntaxHighlighterSettings', false);
     add_integration_function('integrate_admin_areas', 'addCodeSyntaxHighlighterAdminArea', false);
     add_integration_function('integrate_modify_modifications', 'addCodeSyntaxHighlighterAdminAction', false);
     add_integration_function('integrate_bbc_codes', 'changeCodeSyntaxHighlighterTag', false);

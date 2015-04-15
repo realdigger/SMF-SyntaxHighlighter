@@ -12,7 +12,7 @@
         <readme type="file" parsebbc="true" lang="russian">readme/russian.txt</readme>
         <readme type="file" parsebbc="true" lang="english-utf8">readme/english-utf8.txt</readme>
         <readme type="file" parsebbc="true" lang="russian-utf8">readme/russian-utf8.txt</readme>
-        <require-file name="Mod-CodeSyntaxHighlighter.php" destination="$sourcedir"/>
+        <require-dir name="Sources" destination="$boarddir"/>
         <require-dir name="Themes" destination="$boarddir"/>
         <code>add_settings.php</code>
         <code>hooks.php</code>
