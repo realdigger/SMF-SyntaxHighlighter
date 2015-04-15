@@ -1,0 +1,4 @@
+[center][b]Code Syntax Highlighter[/b][/center]
+
+Author: [url=http://mysmf.ru]digger[/url]
+This mod is licensed under the MIT license [url]http://opensource.org/licenses/mit-license.php[/url].
