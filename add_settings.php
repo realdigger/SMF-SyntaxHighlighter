@@ -17,13 +17,17 @@ if ((SMF == 'SSI') && !$user_info['is_admin'])
 
 // List settings here in the format: setting_key => default_value.  Escape any "s. (" => \")
 $mod_settings = array(
+    // Settings
+    'code_syntax_highlighter_font_size' => 'medium',
+    'code_syntax_highlighter_engine' => 'hljs',
+    // SyntaxHighlighter
     'code_syntax_highlighter_theme' => 'Default',
-    'code_syntax_highlighter_toolbar' => 1,
     'code_syntax_highlighter_gutter' => 1,
     'code_syntax_highlighter_auto_links' => 1,
     'code_syntax_highlighter_smart_tabs' => 1,
-    'code_syntax_highlighter_tab_size' => 4,
     'code_syntax_highlighter_pad_line_numbers' => 0,
+    // highlight.js
+    'code_syntax_highlighter_hljs_theme' => 'default',
 );
 
 // Update mod settings if applicable

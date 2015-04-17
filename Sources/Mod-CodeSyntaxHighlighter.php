@@ -9,6 +9,9 @@
 
 // TODO: field for lang select
 // TODO: load when needed only
+// TODO: line breaks
+// TODO: don't load for wap & tapatalk
+// TODO: fix spacing for code title
 
 if (!defined('SMF'))
     die('Hacking attempt...');
@@ -24,7 +27,6 @@ function loadCodeSyntaxHighlighterHooks()
     add_integration_function('integrate_admin_areas', 'addCodeSyntaxHighlighterAdminArea', false);
     add_integration_function('integrate_modify_modifications', 'addCodeSyntaxHighlighterAdminAction', false);
     add_integration_function('integrate_bbc_codes', 'changeCodeSyntaxHighlighterTag', false);
-    //add_integration_function('integrate_create_post', 'addCodeSyntaxHighlighterForPost', false);
 }
 
 
@@ -77,6 +79,22 @@ function addCodeSyntaxHighlighterAdminSettings($return_config = false)
 
     $config_vars = array(
         array('title', 'code_syntax_highlighter_title_settings'),
+        array('select', 'code_syntax_highlighter_engine',
+            array(
+                'sh' => 'Syntax Highlighter',
+                'hljs' => 'Highlight.js',
+            ),
+        ),
+        array('select', 'code_syntax_highlighter_font_size',
+            array(
+                'small' => $txt['code_syntax_highlighter_font_small'],
+                'medium' => $txt['code_syntax_highlighter_font_medium'],
+                'large' => $txt['code_syntax_highlighter_font_large'],
+            ),
+        ),
+
+
+        array('title', 'code_syntax_highlighter_title_syntax_highlighter'),
         array('select', 'code_syntax_highlighter_theme',
             array(
                 'shThemeDefault' => 'Default',
@@ -88,14 +106,69 @@ function addCodeSyntaxHighlighterAdminSettings($return_config = false)
                 'shThemeRDark' => 'RDark',
             ),
         ),
-        array('check', 'code_syntax_highlighter_toolbar'),
         array('check', 'code_syntax_highlighter_gutter'),
         array('check', 'code_syntax_highlighter_auto_links'),
         array('check', 'code_syntax_highlighter_smart_tabs'),
-        array('int', 'code_syntax_highlighter_tab_size'),
         array('check', 'code_syntax_highlighter_pad_line_numbers'),
+
+        array('title', 'code_syntax_highlighter_title_hljs'),
+        array('select', 'code_syntax_highlighter_hljs_theme',
+            array(
+                'default' => 'Default',
+                'agate' => 'Agate',
+                'androidstudio' => 'Android Studio',
+                'arta' => 'Arta',
+                'ascetic' => 'Ascetic',
+                'atelier-dune.dark' => 'Atelier Dune - Dark',
+                'atelier-dune.light' => 'Atelier Dune - Light',
+                'brown_paper' => 'Brown Paper',
+                'codepen-embed' => 'Codepen.io Embed',
+                'color-brewer' => 'Colorbrewer',
+                'dark' => 'Dark',
+                'darkula' => 'Darkula',
+                'docco' => 'Docco',
+                'far' => 'FAR',
+                'foundation' => 'Foundation',
+                'github' => 'GitHub',
+                'googlecode'=>'Google Code',
+                'hybrid' => 'Hybrid',
+                'idea' => 'IDEA',
+                //
+                'xcode' => 'XCode',
+                'zenburn' => 'Zenburn',
+            ),
+        ),
     );
 
+    /*
+
+
+
+IR Black
+Kimbie - Dark
+Kimbie - Light
+Magula
+Mono Blue
+Monokai
+Monokai Sublime
+Obsidian
+Paraíso - Dark
+Paraíso - Light
+Pojoaque
+Railscasts
+Rainbow
+School Book
+Solarized - Dark
+Solarized - Light
+Sunburst
+Tomorrow
+Tomorrow Night
+Tomorrow Night Blue
+Tomorrow Night Bright
+Tomorrow Night Eighties
+
+
+    */
     if ($return_config)
         return $config_vars;
 
@@ -113,19 +186,21 @@ function loadCodeSyntaxHighlighterAssets()
 {
     global $modSettings, $context, $settings;
 
-    $context['insert_after_template'] .= '
+    if ($modSettings['code_syntax_highlighter_engine'] == 'sh') {
+        // Load Syntax Highlighter
+        $context['insert_after_template'] .= '
                 <script src="' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/XRegExp.js" type="text/javascript"></script>
                 <script src="' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/shCore.js" type="text/javascript"></script>
                 <script src="' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/shAutoloader.js" type="text/javascript"></script>
                 <script type="text/javascript"><!-- // --><![CDATA[
                     SyntaxHighlighter.config.bloggerMode = true;
                     SyntaxHighlighter.config.stripBrs = true;
-                    ' . (!empty($modSettings['code_syntax_highlighter_toolbar']) ? 'SyntaxHighlighter.defaults["toolbar"] = true;' : 'SyntaxHighlighter.defaults["toolbar"] = false;') . '
+                    SyntaxHighlighter.defaults["toolbar"] = false;
+                    SyntaxHighlighter.defaults["tab-size"] = 4;
                     ' . (!empty($modSettings['code_syntax_highlighter_gutter']) ? 'SyntaxHighlighter.defaults["gutter"] = true;' : 'SyntaxHighlighter.defaults["gutter"] = false;') . '
                     ' . (!empty($modSettings['code_syntax_highlighter_auto_links']) ? 'SyntaxHighlighter.defaults["auto-links"] = true;' : 'SyntaxHighlighter.defaults["auto-links"] = false;') . '
                     ' . (!empty($modSettings['code_syntax_highlighter_pad_line_numbers']) ? 'SyntaxHighlighter.defaults["pad-line-numbers"] = true;' : 'SyntaxHighlighter.defaults["pad-line-numbers"] = false;') . '
                     ' . (!empty($modSettings['code_syntax_highlighter_smart_tabs']) ? 'SyntaxHighlighter.defaults["smart-tabs"] = true;' : 'SyntaxHighlighter.defaults["smart-tabs"] = false;') . '
-                    ' . (!empty($modSettings['code_syntax_highlighter_tab_size']) ? 'SyntaxHighlighter.defaults["tab-size"] = ' . $modSettings['code_syntax_highlighter_tab_size'] . ';' : 'SyntaxHighlighter.defaults["tab-size"] = 4;') . '
                     SyntaxHighlighter.autoloader(
 	                    "applescript			' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushAppleScript.js",
 	                    "actionscript3 as3		' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushAS3.js",
@@ -156,10 +231,28 @@ function loadCodeSyntaxHighlighterAssets()
 	            // ]]></script>
     ';
 
-    $context['html_headers'] .= '
+        $context['html_headers'] .= '
     <link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/CodeSyntaxHighlighter/' . 'shCore.css" />
     <link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/CodeSyntaxHighlighter/' . $modSettings['code_syntax_highlighter_theme'] . '.css" />
     ';
+    } elseif ($modSettings['code_syntax_highlighter_engine'] == 'hljs') {
+        // Load highlight.js
+        $context['insert_after_template'] .= '
+                <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js" type="text/javascript"></script>
+                <script type="text/javascript"><!-- // --><![CDATA[
+                    hljs.initHighlightingOnLoad();
+	            // ]]></script>
+    ';
+
+        $context['html_headers'] .= '
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/' . $modSettings['code_syntax_highlighter_hljs_theme'] . '.min.css">
+    ';
+        //<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/8.5/styles/default.min.css">
+        //<script src="//cdn.jsdelivr.net/highlight.js/8.5/highlight.min.js"></script>
+
+    } else return false;
+
+    return true;
 }
 
 
@@ -169,7 +262,7 @@ function loadCodeSyntaxHighlighterAssets()
  */
 function changeCodeSyntaxHighlighterTag(&$codes = array())
 {
-    global $txt;
+    global $modSettings, $txt;
 
     foreach ($codes as $codeId => $code) {
         if ($code['tag'] == 'code' && $code['type'] == 'unparsed_equals_content') {
@@ -177,8 +270,9 @@ function changeCodeSyntaxHighlighterTag(&$codes = array())
             $codes[$codeId] = array(
                 'tag' => 'code',
                 'type' => 'unparsed_equals_content',
-                //'test' => '[A-Za-z0-9_,\-\s]+?\]',
-                'content' => '<div class="codeheader">' . $txt['code'] . ': ($2) </div><pre name="code" class="brush: $2">$1</pre>',
+                'content' => '<div class="codeheader">' . $txt['code'] . ': ($2) </div><div style="font-size: '.$modSettings['code_syntax_highlighter_font_size'].'">' .
+                    ($modSettings['code_syntax_highlighter_engine'] == 'hljs' ? '<pre name="code"><code class="$2">$1</code></pre>' :
+                        ($modSettings['code_syntax_highlighter_engine'] == 'sh' ? '<pre name="code" class="brush: $2">$1</pre>' : '<pre>$1</pre>')). '</div>',
                 'validate' => create_function('&$tag, &$data, $disabled', '
                     if (!isset($disabled[\'code\']))
 					    $data[0] = rtrim($data[0], "\n\r");
@@ -186,13 +280,14 @@ function changeCodeSyntaxHighlighterTag(&$codes = array())
                 'block_level' => true,
                 'disabled_content' => '<pre>$1</pre>',
             );
-        }
-        elseif ($code['tag'] == 'code' && $code['type'] == 'unparsed_content') {
+        } elseif ($code['tag'] == 'code' && $code['type'] == 'unparsed_content') {
             //unset($codes[$codeId]);
             $codes[$codeId] = array(
                 'tag' => 'code',
                 'type' => 'unparsed_content',
-                'content' => '<div class="codeheader">' . $txt['code'] . ': (text) </div><pre name="code" class="brush: php">$1</pre>',
+                'content' => '<div class="codeheader">' . $txt['code'] . '</div><div style="font-size: '.$modSettings['code_syntax_highlighter_font_size'].'">' .
+                    ($modSettings['code_syntax_highlighter_engine'] == 'hljs' ? '<pre name="code"><code>$1</code></pre>' :
+                        ($modSettings['code_syntax_highlighter_engine'] == 'sh' ? '<pre name="code" class="brush: text">$1</pre>' : '<pre>$1</pre>')) . '</div>',
                 'validate' => create_function('&$tag, &$data, $disabled', '
                     if (!isset($disabled[\'code\']))
 					    $data = rtrim($data, "\n\r");
@@ -200,13 +295,15 @@ function changeCodeSyntaxHighlighterTag(&$codes = array())
                 'block_level' => true,
                 'disabled_content' => '<pre>$1</pre>',
             );
-        }
-        elseif ($code['tag'] == 'php' && $code['type'] == 'unparsed_content') {
+        } elseif ($code['tag'] == 'php' && $code['type'] == 'unparsed_content') {
             //unset($codes[$codeId]);
             $codes[$codeId] = array(
                 'tag' => 'php',
                 'type' => 'unparsed_content',
-                'content' => '<div class="codeheader">' . $txt['code'] . ': (php) </div><pre name="code" class="brush: php">$1</pre>',
+                'content' => '<div class="codeheader">' . $txt['code'] . ': (php) </div><div style="font-size: '.$modSettings['code_syntax_highlighter_font_size'].'">' .
+                    ($modSettings['code_syntax_highlighter_engine'] == 'hljs' ? '<pre name="code"><code class="php">$1</code></pre>' :
+                        ($modSettings['code_syntax_highlighter_engine'] == 'sh' ? '<pre name="code" class="brush: php">$1</pre>' : '<pre>$1</pre>')). '</div>',
+
                 'validate' => create_function('&$tag, &$data, $disabled', '
                     if (!isset($disabled[\'php\']))
 					    $data = rtrim($data, "\n\r");
