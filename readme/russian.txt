@@ -1,4 +1,15 @@
 [center][b]Code Syntax Highlighter[/b][/center]
 
-Author: [url=http://mysmf.ru]digger[/url]
-This mod is licensed under the MIT license [url]http://opensource.org/licenses/mit-license.php[/url].
+Автор: digger http://mysmf.ru
+Лицензия: The MIT License (MIT)
+Совместимость: SMF 2.0, SMF 2.1
+
+Мод для автоматической подсветки синтаксиса исхдных текстов программного кода. Позволяет использовать на выбор один из двух скриптов подсветки — SyntaxHighlighter или Highlight.js.
+
+SyntaxHighlighter — это полнофункциональной автономный подсветчик синтаксиса, написанный на JavaScript.
+SyntaxHighlighter распространяется под лицензией MIT http://opensource.org/licenses/mit-license.php
+Официальный сайт билиотеки расположен по адресу http://alexgorbatchev.com/SyntaxHighlighter
+
+Highlight.js — это подсветчик синтаксиса, написанный на JavaScript. Он работает с практически любой HTML разметкой, не зависит от каких-либо фреймворков и умеет автоматически определять язык.
+Highlight.js распространяется под лицензией BSD http://opensource.org/licenses/BSD-3-Clause
+Официальный сайт билиотеки расположен по адресу https://highlightjs.org

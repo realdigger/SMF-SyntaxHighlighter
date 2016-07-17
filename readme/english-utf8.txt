@@ -1,4 +1,11 @@
 [center][b]Code Syntax Highlighter[/b][/center]
 
-Author: [url=http://mysmf.ru]digger[/url]
-This mod is licensed under the MIT license [url]http://opensource.org/licenses/mit-license.php[/url].rl]http://creativecommons.org/licenses/by-nc-nd/4.0/[/url].
+Author: digger http://mysmf.ru
+License: The MIT License (MIT)
+Compatible with: SMF 2.0, SMF 2.1
+
+Description:
+Code Syntax Highlighter for SMF. You can select preferred highlight script.
+
+SyntaxHighlighter http://alexgorbatchev.com/SyntaxHighlighter
+Highlight.js https://highlightjs.org

@@ -2,16 +2,10 @@
 /**
  * @package SMF Code Syntax Highlighter Mod
  * @author digger http://mysmf.ru
- * @copyright 2015
- * @license MIT http://opensource.org/licenses/mit-license.php
+ * @copyright 2012-2016
+ * @license The MIT License (MIT)
  * @version 2.0
  */
-
-// TODO: field for lang select
-// TODO: load when needed only
-// TODO: line breaks
-// TODO: don't load for wap & tapatalk
-// TODO: fix spacing for code title
 
 if (!defined('SMF'))
     die('Hacking attempt...');
@@ -38,7 +32,7 @@ function addCodeSyntaxHighlighterCopyright()
     global $context;
 
     if ($context['current_action'] == 'credits')
-        $context['copyrights']['mods'][] = '<a href="http://mysmf.ru/code-syntax-highlighter" target="_blank">CodeSyntaxHighlighter</a> &copy; 2010-2015, digger';
+        $context['copyrights']['mods'][] = '<a href="http://mysmf.ru/mods/code-syntax-highlighter" target="_blank">CodeSyntaxHighlighter</a> &copy; 2010-2016, digger';
 }
 
 
@@ -81,7 +75,7 @@ function addCodeSyntaxHighlighterAdminSettings($return_config = false)
         array('title', 'code_syntax_highlighter_title_settings'),
         array('select', 'code_syntax_highlighter_engine',
             array(
-                'sh' => 'Syntax Highlighter',
+                'sh' => 'SyntaxHighlighter',
                 'hljs' => 'Highlight.js',
             ),
         ),
@@ -107,11 +101,18 @@ function addCodeSyntaxHighlighterAdminSettings($return_config = false)
             ),
         ),
         array('check', 'code_syntax_highlighter_gutter'),
+        array('check', 'code_syntax_highlighter_pad_line_numbers'),
         array('check', 'code_syntax_highlighter_auto_links'),
         array('check', 'code_syntax_highlighter_smart_tabs'),
-        array('check', 'code_syntax_highlighter_pad_line_numbers'),
 
         array('title', 'code_syntax_highlighter_title_hljs'),
+        array('select', 'code_syntax_highlighter_hljs_load',
+            array(
+                'local' => 'Локально',
+                'cloudflare' => 'Cloudflare CDN',
+                'jsdelivr' => ' jsDelivr CDN',
+            )
+        ),
         array('select', 'code_syntax_highlighter_hljs_theme',
             array(
                 'default' => 'Default',
@@ -130,7 +131,7 @@ function addCodeSyntaxHighlighterAdminSettings($return_config = false)
                 'far' => 'FAR',
                 'foundation' => 'Foundation',
                 'github' => 'GitHub',
-                'googlecode'=>'Google Code',
+                'googlecode' => 'Google Code',
                 'hybrid' => 'Hybrid',
                 'idea' => 'IDEA',
                 //
@@ -189,9 +190,9 @@ function loadCodeSyntaxHighlighterAssets()
     if ($modSettings['code_syntax_highlighter_engine'] == 'sh') {
         // Load Syntax Highlighter
         $context['insert_after_template'] .= '
-                <script src="' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/XRegExp.js" type="text/javascript"></script>
-                <script src="' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/shCore.js" type="text/javascript"></script>
-                <script src="' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/shAutoloader.js" type="text/javascript"></script>
+                <script src="' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/XRegExp.js" type="text/javascript"></script>
+                <script src="' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/shCore.js" type="text/javascript"></script>
+                <script src="' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/shAutoloader.js" type="text/javascript"></script>
                 <script type="text/javascript"><!-- // --><![CDATA[
                     SyntaxHighlighter.config.bloggerMode = true;
                     SyntaxHighlighter.config.stripBrs = true;
@@ -202,53 +203,67 @@ function loadCodeSyntaxHighlighterAssets()
                     ' . (!empty($modSettings['code_syntax_highlighter_pad_line_numbers']) ? 'SyntaxHighlighter.defaults["pad-line-numbers"] = true;' : 'SyntaxHighlighter.defaults["pad-line-numbers"] = false;') . '
                     ' . (!empty($modSettings['code_syntax_highlighter_smart_tabs']) ? 'SyntaxHighlighter.defaults["smart-tabs"] = true;' : 'SyntaxHighlighter.defaults["smart-tabs"] = false;') . '
                     SyntaxHighlighter.autoloader(
-	                    "applescript			' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushAppleScript.js",
-	                    "actionscript3 as3		' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushAS3.js",
-                        "bash shell				' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushBash.js",
-	                    "coldfusion cf			' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushColdFusion.js",
-                        "cpp c					' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushCpp.js",
-	                    "c# c-sharp csharp		' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushCSharp.js",
-	                    "css					' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushCss.js",
-	                    "delphi pascal			' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushDelphi.js",
-	                    "diff patch pas			' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushDiff.js",
-	                    "erl erlang				' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushErlang.js",
-	                    "groovy					' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushGroovy.js",
-	                    "haxe hx				' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushHaxe.js",
-	                    "java					' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushJava.js",
-	                    "jfx javafx				' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushJavaFX.js",
-                        "js jscript javascript	' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushJScript.js",
-	                    "perl pl				' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushPerl.js",
-	                    "php					' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushPhp.js",
-	                    "text plain				' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushPlain.js",
-	                    "py python				' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushPython.js",
-	                    "ruby rails ror rb		' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushRuby.js",
-	                    "scala					' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushScala.js",
-	                    "sql					' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushSql.js",
-	                    "vb vbnet				' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushVb.js",
-	                    "xml xhtml xslt html	' . $settings['default_theme_url'] . '/scripts/CodeSyntaxHighlighter/' . 'shBrushXml.js"
+	                    "applescript			' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushAppleScript.js",
+	                    "actionscript3 as3		' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushAS3.js",
+                        "bash shell				' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushBash.js",
+	                    "coldfusion cf			' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushColdFusion.js",
+                        "cpp c					' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushCpp.js",
+	                    "c# c-sharp csharp		' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushCSharp.js",
+	                    "css					' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushCss.js",
+	                    "delphi pascal			' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushDelphi.js",
+	                    "diff patch pas			' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushDiff.js",
+	                    "erl erlang				' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushErlang.js",
+	                    "groovy					' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushGroovy.js",
+	                    "haxe hx				' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushHaxe.js",
+	                    "java					' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushJava.js",
+	                    "jfx javafx				' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushJavaFX.js",
+                        "js jscript javascript	' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushJScript.js",
+	                    "perl pl				' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushPerl.js",
+	                    "php					' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushPhp.js",
+	                    "text plain				' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushPlain.js",
+	                    "py python				' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushPython.js",
+	                    "ruby rails ror rb		' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushRuby.js",
+	                    "scala					' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushScala.js",
+	                    "sql					' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushSql.js",
+	                    "vb vbnet				' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushVb.js",
+	                    "xml xhtml xslt html	' . $settings['default_theme_url'] . '/scripts/SyntaxHighlighter/' . 'shBrushXml.js"
                     );
                     SyntaxHighlighter.all();
 	            // ]]></script>
     ';
 
         $context['html_headers'] .= '
-    <link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/CodeSyntaxHighlighter/' . 'shCore.css" />
-    <link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/CodeSyntaxHighlighter/' . $modSettings['code_syntax_highlighter_theme'] . '.css" />
+    <link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/SyntaxHighlighter/' . 'shCore.css" />
+    <link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/SyntaxHighlighter/' . $modSettings['code_syntax_highlighter_theme'] . '.css" />
     ';
     } elseif ($modSettings['code_syntax_highlighter_engine'] == 'hljs') {
+
         // Load highlight.js
+        switch ($modSettings['code_syntax_highlighter_hljs_load']) {
+
+            case 'cloudflare';
+                $context['html_headers'] .= '
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/' . $modSettings['code_syntax_highlighter_hljs_theme'] . '.min.css /">';
+                $context['insert_after_template'] .= '
+                <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js" type="text/javascript"></script>';
+                break;
+
+            case 'jsdelivr';
+                $context['html_headers'] .= '
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/highlight.js/9.5.0/styles/' . $modSettings['code_syntax_highlighter_hljs_theme'] . '.min.css" />';
+                $context['insert_after_template'] .= '
+                <script src="//cdn.jsdelivr.net/highlight.js/9.5.0/highlight.min.js" type="text/javascript"></script>';
+                break;
+
+            case 'local';
+                $i = 1;
+                break;
+        }
+
         $context['insert_after_template'] .= '
-                <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js" type="text/javascript"></script>
                 <script type="text/javascript"><!-- // --><![CDATA[
                     hljs.initHighlightingOnLoad();
-	            // ]]></script>
-    ';
-
-        $context['html_headers'] .= '
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/' . $modSettings['code_syntax_highlighter_hljs_theme'] . '.min.css">
-    ';
-        //<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/8.5/styles/default.min.css">
-        //<script src="//cdn.jsdelivr.net/highlight.js/8.5/highlight.min.js"></script>
+	            // ]]></script>';
 
     } else return false;
 
@@ -266,13 +281,12 @@ function changeCodeSyntaxHighlighterTag(&$codes = array())
 
     foreach ($codes as $codeId => $code) {
         if ($code['tag'] == 'code' && $code['type'] == 'unparsed_equals_content') {
-            //unset($codes[$codeId]);
             $codes[$codeId] = array(
                 'tag' => 'code',
                 'type' => 'unparsed_equals_content',
-                'content' => '<div class="codeheader">' . $txt['code'] . ': ($2) </div><div style="font-size: '.$modSettings['code_syntax_highlighter_font_size'].'">' .
+                'content' => '<div class="codeheader">' . $txt['code'] . ': ($2) </div><div style="font-size: ' . $modSettings['code_syntax_highlighter_font_size'] . '">' .
                     ($modSettings['code_syntax_highlighter_engine'] == 'hljs' ? '<pre name="code"><code class="$2">$1</code></pre>' :
-                        ($modSettings['code_syntax_highlighter_engine'] == 'sh' ? '<pre name="code" class="brush: $2">$1</pre>' : '<pre>$1</pre>')). '</div>',
+                        ($modSettings['code_syntax_highlighter_engine'] == 'sh' ? '<pre name="code" class="brush: $2">$1</pre>' : '<pre>$1</pre>')) . '</div>',
                 'validate' => create_function('&$tag, &$data, $disabled', '
                     if (!isset($disabled[\'code\']))
 					    $data[0] = rtrim($data[0], "\n\r");
@@ -281,11 +295,10 @@ function changeCodeSyntaxHighlighterTag(&$codes = array())
                 'disabled_content' => '<pre>$1</pre>',
             );
         } elseif ($code['tag'] == 'code' && $code['type'] == 'unparsed_content') {
-            //unset($codes[$codeId]);
             $codes[$codeId] = array(
                 'tag' => 'code',
                 'type' => 'unparsed_content',
-                'content' => '<div class="codeheader">' . $txt['code'] . '</div><div style="font-size: '.$modSettings['code_syntax_highlighter_font_size'].'">' .
+                'content' => '<div class="codeheader">' . $txt['code'] . '</div><div style="font-size: ' . $modSettings['code_syntax_highlighter_font_size'] . '">' .
                     ($modSettings['code_syntax_highlighter_engine'] == 'hljs' ? '<pre name="code"><code>$1</code></pre>' :
                         ($modSettings['code_syntax_highlighter_engine'] == 'sh' ? '<pre name="code" class="brush: text">$1</pre>' : '<pre>$1</pre>')) . '</div>',
                 'validate' => create_function('&$tag, &$data, $disabled', '
@@ -296,13 +309,12 @@ function changeCodeSyntaxHighlighterTag(&$codes = array())
                 'disabled_content' => '<pre>$1</pre>',
             );
         } elseif ($code['tag'] == 'php' && $code['type'] == 'unparsed_content') {
-            //unset($codes[$codeId]);
             $codes[$codeId] = array(
                 'tag' => 'php',
                 'type' => 'unparsed_content',
-                'content' => '<div class="codeheader">' . $txt['code'] . ': (php) </div><div style="font-size: '.$modSettings['code_syntax_highlighter_font_size'].'">' .
+                'content' => '<div class="codeheader">' . $txt['code'] . ': (php) </div><div style="font-size: ' . $modSettings['code_syntax_highlighter_font_size'] . '">' .
                     ($modSettings['code_syntax_highlighter_engine'] == 'hljs' ? '<pre name="code"><code class="php">$1</code></pre>' :
-                        ($modSettings['code_syntax_highlighter_engine'] == 'sh' ? '<pre name="code" class="brush: php">$1</pre>' : '<pre>$1</pre>')). '</div>',
+                        ($modSettings['code_syntax_highlighter_engine'] == 'sh' ? '<pre name="code" class="brush: php">$1</pre>' : '<pre>$1</pre>')) . '</div>',
 
                 'validate' => create_function('&$tag, &$data, $disabled', '
                     if (!isset($disabled[\'php\']))
