@@ -2,6 +2,7 @@
 * **Author:** digger http://mysmf.ru
 * **License:** The MIT License (MIT)
 * **Compatible with:** SMF 2.0, SMF 2.1
+* **Hooks only:** Yes
 
 ## Description
 Code Syntax Highlighter for SMF. You can select preferred highlight script.
