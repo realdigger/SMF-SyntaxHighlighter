@@ -11,9 +11,9 @@ SyntaxHighlighter http://alexgorbatchev.com/SyntaxHighlighter
 Highlight.js https://highlightjs.org
 
 ## Описание
-Мод для автоматической подсветки синтаксиса исхдных текстов программного кода. Позволяет использовать на выбор один из двух скриптов подсветки — SyntaxHighlighter или Highlight.js.
+Мод для автоматической подсветки синтаксиса исходных текстов программного кода. Позволяет использовать на выбор один из двух скриптов подсветки — SyntaxHighlighter или Highlight.js.
 
-SyntaxHighlighter — это полнофункциональной автономный подсветчик синтаксиса, написанный на JavaScript.
+SyntaxHighlighter — это полнофункциональный автономный подсветчик синтаксиса, написанный на JavaScript.
 SyntaxHighlighter распространяется под лицензией MIT http://opensource.org/licenses/mit-license.php
 Официальный сайт билиотеки расположен по адресу http://alexgorbatchev.com/SyntaxHighlighter
 
