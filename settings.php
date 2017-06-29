@@ -1,7 +1,7 @@
 <?php
 /**
  * @package SMF Code Syntax Highlighter Mod
- * @author digger http://mysmf.ru
+ * @author digger http://mysmf.net
  * @copyright 2015
  * @license MIT http://opensource.org/licenses/mit-license.php
  * @version 2.0

@@ -1,6 +1,6 @@
 [center][b]Code Syntax Highlighter[/b][/center]
 
-                                    Author: digger http://mysmf.ru
+                                    Author: digger http://mysmf.net
                                     License: The MIT License (MIT)
                                     Compatible with: SMF 2.0, SMF 2.1
 

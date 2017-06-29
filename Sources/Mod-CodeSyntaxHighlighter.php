@@ -1,8 +1,8 @@
 <?php
 /**
  * @package SMF Code Syntax Highlighter Mod
- * @author digger http://mysmf.ru
- * @copyright 2012-2016
+ * @author digger http://mysmf.net
+ * @copyright 2012-2017
  * @license The MIT License (MIT)
  * @version 2.0
  */
@@ -32,7 +32,7 @@ function addCodeSyntaxHighlighterCopyright()
     global $context;
 
     if ($context['current_action'] == 'credits')
-        $context['copyrights']['mods'][] = '<a href="http://mysmf.ru/mods/code-syntax-highlighter" target="_blank">CodeSyntaxHighlighter</a> &copy; 2010-2016, digger';
+        $context['copyrights']['mods'][] = '<a href="http://mysmf.net/mods/code-syntax-highlighter" target="_blank">CodeSyntaxHighlighter</a> &copy; 2012-2017, digger';
 }
 
 

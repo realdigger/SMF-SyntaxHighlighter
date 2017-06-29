@@ -5,7 +5,7 @@
     <id>digger:code_syntax_highlighter</id>
     <name>Code Syntax Highlighter</name>
     <type>modification</type>
-    <version>2.0</version>
+    <version>2.0.1</version>
 
     <install for="2.0 - 2.1.99">
         <readme type="file" parsebbc="true">readme/english.txt</readme>
@@ -14,8 +14,8 @@
         <readme type="file" parsebbc="true" lang="russian-utf8">readme/russian-utf8.txt</readme>
         <require-dir name="Sources" destination="$boarddir"/>
         <require-dir name="Themes" destination="$boarddir"/>
-        <code>add_settings.php</code>
-        <code>hooks.php</code>
+        <database>settings.php</database>
+        <database>hooks.php</database>
         <redirect url="?action=admin;area=modsettings;sa=code_syntax_highlighter"/>
     </install>
 
@@ -24,7 +24,7 @@
         <remove-dir name="$languagedir/CodeSyntaxHighlighter"/>
         <remove-dir name="$themedir/scripts/CodeSyntaxHighlighter"/>
         <remove-dir name="$themedir/css/CodeSyntaxHighlighter"/>
-        <code>hooks.php</code>
+        <database>hooks.php</database>
     </uninstall>
 
 </package-info>

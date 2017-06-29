@@ -1,5 +1,6 @@
+[![Build Status](https://travis-ci.org/realdigger/SMF-SyntaxHighlighter.svg?branch=master)](https://travis-ci.org/realdigger/SMF-SyntaxHighlighter)
 # SMF Code Syntax Highlighter mod
-* **Author:** digger http://mysmf.ru
+* **Author:** digger http://mysmf.net
 * **License:** The MIT License (MIT)
 * **Compatible with:** SMF 2.0, SMF 2.1
 * **Hooks only:** Yes
