@@ -2,7 +2,7 @@
 /**
  * @package SMF Code Syntax Highlighter Mod
  * @author digger http://mysmf.net
- * @copyright 2012-2017
+ * @copyright 2012-2018
  * @license The MIT License (MIT)
  * @version 2.0
  */
@@ -32,7 +32,7 @@ function addCodeSyntaxHighlighterCopyright()
     global $context;
 
     if ($context['current_action'] == 'credits')
-        $context['copyrights']['mods'][] = '<a href="http://mysmf.net/mods/code-syntax-highlighter" target="_blank">CodeSyntaxHighlighter</a> &copy; 2012-2017, digger';
+        $context['copyrights']['mods'][] = '<a href="http://mysmf.net/mods/code-syntax-highlighter" target="_blank">CodeSyntaxHighlighter</a> &copy; 2012-2018, digger';
 }
 
 
@@ -43,7 +43,7 @@ function addCodeSyntaxHighlighterCopyright()
 function addCodeSyntaxHighlighterAdminArea(&$admin_areas)
 {
     global $txt;
-    loadLanguage('CodeSyntaxHighlighter/');
+    loadLanguage('CodeSyntaxHighlighter/CodeSyntaxHighlighter');
 
     $admin_areas['config']['areas']['modsettings']['subsections']['code_syntax_highlighter'] = array($txt['code_syntax_highlighter_title_menu']);
 }
@@ -66,7 +66,7 @@ function addCodeSyntaxHighlighterAdminAction(&$subActions)
 function addCodeSyntaxHighlighterAdminSettings($return_config = false)
 {
     global $txt, $scripturl, $context;
-    loadLanguage('CodeSyntaxHighlighter/');
+    loadLanguage('CodeSyntaxHighlighter/CodeSyntaxHighlighter');
 
     $context['page_title'] = $txt['code_syntax_highlighter_title_menu'];
     $context['post_url'] = $scripturl . '?action=admin;area=modsettings;save;sa=code_syntax_highlighter';
@@ -141,10 +141,7 @@ function addCodeSyntaxHighlighterAdminSettings($return_config = false)
         ),
     );
 
-    /*
-
-
-
+/*
 IR Black
 Kimbie - Dark
 Kimbie - Light
@@ -167,9 +164,8 @@ Tomorrow Night
 Tomorrow Night Blue
 Tomorrow Night Bright
 Tomorrow Night Eighties
+*/
 
-
-    */
     if ($return_config)
         return $config_vars;
 
